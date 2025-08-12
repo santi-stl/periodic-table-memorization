@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Periodic Table Memorizer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>Periodic Table Memorizer</h1>
+  </header>
+
+  <main id="app">
+    <!-- Home screen with mode selection -->
+    <section id="home-screen" class="screen">
+      <p class="intro-text">Select a mode to begin memorizing the elements.</p>
+      <div class="mode-buttons">
+        <!-- Add specific classes per mode so we can colour them individually -->
+        <button id="btn-study" class="mode-btn study">Study</button>
+        <button id="btn-learn" class="mode-btn learn">Learn</button>
+        <button id="btn-quiz" class="mode-btn quiz">Quiz</button>
+        <button id="btn-grouped" class="mode-btn grouped">Grouped Quiz</button>
+        <button id="btn-table" class="mode-btn table">Periodic Table</button>
+      </div>
+    </section>
+
+    <!-- Study mode screen -->
+    <section id="study-screen" class="screen hidden">
+      <button class="back-btn" data-target="home-screen">← Back</button>
+      <h2 class="mode-title">Study Mode</h2>
+      <div class="study-wrapper card">
+        <div id="study-square" class="element-square"></div>
+        <div id="study-name" class="study-name"></div>
+        <div id="study-progress" class="progress-text"></div>
+        <!-- Small tile replicating periodic table style -->
+        <div id="study-tile" class="study-tile">
+          <div class="element-square small"></div>
+          <div class="tile-name"></div>
+        </div>
+        <div class="nav-controls">
+          <button id="study-prev" class="nav-btn">← Prev</button>
+          <button id="study-next" class="nav-btn">Next →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Learn mode screen -->
+    <section id="learn-screen" class="screen hidden">
+      <button class="back-btn" data-target="home-screen">← Back</button>
+      <h2 class="mode-title">Learn Mode</h2>
+      <div class="learn-wrapper card">
+        <div id="learn-square" class="element-square large"></div>
+        <div id="learn-progress" class="progress-text"></div>
+        <div id="learn-options" class="options-grid"></div>
+      </div>
+    </section>
+
+    <!-- Quiz mode screen -->
+    <section id="quiz-screen" class="screen hidden">
+      <button class="back-btn" data-target="home-screen">← Back</button>
+      <h2 class="mode-title">Quiz Mode</h2>
+      <div class="quiz-wrapper card">
+        <div id="quiz-prompt" class="quiz-prompt"></div>
+        <input id="quiz-input" type="text" class="quiz-input" placeholder="Type the answer" />
+        <div id="quiz-feedback" class="quiz-feedback"></div>
+        <div class="nav-controls single">
+          <button id="quiz-submit" class="nav-btn">Submit</button>
+        </div>
+        <div id="quiz-score" class="progress-text"></div>
+      </div>
+    </section>
+
+    <!-- Grouped quiz selection screen -->
+    <section id="group-selection-screen" class="screen hidden">
+      <button class="back-btn" data-target="home-screen">← Back</button>
+      <h2 class="mode-title">Grouped Quiz</h2>
+      <p class="intro-text">Select a group to test yourself.</p>
+      <div id="group-buttons" class="mode-buttons small"></div>
+    </section>
+
+    <!-- Grouped quiz active screen -->
+    <section id="group-quiz-screen" class="screen hidden">
+      <button class="back-btn" data-target="group-selection-screen">← Back</button>
+      <h2 class="mode-title" id="group-quiz-title">Grouped Quiz</h2>
+      <div class="quiz-wrapper card">
+        <div id="group-quiz-prompt" class="quiz-prompt"></div>
+        <input id="group-quiz-input" type="text" class="quiz-input" placeholder="Type the answer" />
+        <div id="group-quiz-feedback" class="quiz-feedback"></div>
+        <div class="nav-controls single">
+          <button id="group-quiz-submit" class="nav-btn">Submit</button>
+        </div>
+        <div id="group-quiz-score" class="progress-text"></div>
+      </div>
+    </section>
+
+    <!-- Periodic table screen -->
+    <section id="table-screen" class="screen hidden">
+      <button class="back-btn" data-target="home-screen">← Back</button>
+      <h2 class="mode-title">Periodic Table</h2>
+      <div id="periodic-table" class="table-grid"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>Made by Santitola</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

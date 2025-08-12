@@ -1,0 +1,366 @@
+/*
+ * Style sheet for the enhanced Periodic Table Memorizer app.
+ * The palette uses soft greys and whites as a base, allowing
+ * group‑specific colours to stand out. Buttons and cards are
+ * generously sized with rounded corners to ensure a friendly,
+ * tactile feel. A simple grid layout arranges the periodic table
+ * into its familiar form, and tooltips follow the cursor for
+ * immediate feedback.
+ */
+
+/* CSS Reset and base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /* Use a subtle chemistry-themed pattern as the page background. The pattern
+     repeats quietly behind all content and maintains a light, neutral feel. */
+  background-color: #f7f9fc;
+  background-image: url('chemistry_bg.png');
+  background-size: 300px;
+  background-repeat: repeat;
+  color: #2d3748;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 1rem 2rem;
+  text-align: left;
+}
+.site-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-bottom: 4rem;
+}
+
+.screen {
+  width: 100%;
+  max-width: 900px;
+  padding: 1rem;
+}
+.hidden {
+  display: none;
+}
+
+.intro-text {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+/* Buttons */
+.mode-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+/* Base styling for mode buttons on the home screen. They are large, square
+   cards that encourage tapping and utilise vivid colours for each mode. */
+.mode-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 1 150px;
+  height: 100px;
+  border: none;
+  border-radius: 1rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  transition: filter 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+.mode-btn:hover {
+  filter: brightness(1.08);
+}
+/* Smaller variation used for grouped quiz group buttons */
+.mode-btn.small {
+  font-size: 0.9rem;
+  height: auto;
+  padding: 0.6rem 1rem;
+  color: #2d3748;
+  border-radius: 0.5rem;
+  box-shadow: none;
+}
+
+/* Assign distinct colours to each main menu button */
+.mode-btn.study {
+  background-color: #63B3ED; /* bright blue */
+}
+.mode-btn.learn {
+  background-color: #D53F8C; /* pink */
+}
+.mode-btn.quiz {
+  background-color: #68D391; /* green */
+}
+.mode-btn.grouped {
+  background-color: #ED8936; /* orange */
+}
+.mode-btn.table {
+  background-color: #E53E3E; /* red */
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #4a5568;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.mode-title {
+  text-align: left;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* Cards */
+.card {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  padding: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+/* Element square display */
+.element-square {
+  width: 120px;
+  height: 120px;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 auto 1rem auto;
+}
+.element-square.large {
+  width: 140px;
+  height: 140px;
+  font-size: 3rem;
+}
+.element-square.small {
+  width: 60px;
+  height: 60px;
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.study-name {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
+/* Study tile replicating periodic table style */
+.study-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.study-tile .element-square.small {
+  margin-bottom: 0.3rem;
+}
+.study-tile .tile-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #2d3748;
+}
+
+.progress-text {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #718096;
+}
+
+.nav-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+.nav-controls.single {
+  justify-content: center;
+}
+
+.nav-btn {
+  background-color: #e2e8f0;
+  color: #2d3748;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  min-width: 110px;
+}
+.nav-btn:hover {
+  background-color: #cbd5e0;
+}
+
+/* Options grid for learn mode */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.option-tile {
+  /* Use a plain white background for learn mode options so they don't
+     inadvertently hint at the correct choice. A subtle border keeps
+     separation from the background. */
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  user-select: none;
+}
+.option-tile:hover {
+  transform: translateY(-4px);
+  background-color: #e2e8f0;
+}
+.option-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2d3748;
+  text-align: center;
+}
+.option-tile.shake {
+  animation: shake 0.5s;
+}
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+/* Quiz input */
+.quiz-input {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 0.5rem;
+  margin-top: 0.8rem;
+  margin-bottom: 0.4rem;
+}
+.quiz-prompt {
+  font-size: 3rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.quiz-feedback {
+  min-height: 1.2rem;
+  text-align: center;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+/* Periodic table grid */
+.table-grid {
+  display: grid;
+  grid-template-columns: repeat(18, 1fr);
+  grid-auto-rows: 60px;
+  gap: 0.4rem;
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin-top: 1rem;
+}
+.element-tile {
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  position: relative;
+}
+.element-tile:hover {
+  filter: brightness(1.1);
+}
+
+/* Tooltip styling */
+.tooltip {
+  position: absolute;
+  background-color: rgba(30, 30, 30, 0.92);
+  color: #ffffff;
+  padding: 0.8rem;
+  border-radius: 0.6rem;
+  pointer-events: none;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 240px;
+  z-index: 1000;
+}
+.tooltip-square {
+  width: 60px;
+  height: 60px;
+  border-radius: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  color: #fff;
+}
+.tooltip-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+.tooltip-desc {
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+/* Footer */
+.site-footer {
+  font-size: 0.8rem;
+  color: #718096;
+  padding: 0.5rem 1rem;
+  text-align: right;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: auto;
+}
