@@ -22,6 +22,7 @@
         <button id="btn-quiz" class="mode-btn quiz">Quiz</button>
         <button id="btn-grouped" class="mode-btn grouped">Grouped Quiz</button>
         <button id="btn-table" class="mode-btn table">Periodic Table</button>
+        <button id="btn-honors" class="mode-btn honors">Honors Chem Quiz</button>
       </div>
     </section>
 
@@ -99,6 +100,21 @@
       <button class="back-btn" data-target="home-screen">← Back</button>
       <h2 class="mode-title">Periodic Table</h2>
       <div id="periodic-table" class="table-grid"></div>
+    </section>
+
+    <!-- Honors chem quiz screen -->
+    <section id="honors-quiz-screen" class="screen hidden">
+      <button class="back-btn" data-target="home-screen">← Back</button>
+      <h2 class="mode-title">Honors Chem Quiz</h2>
+      <div class="quiz-wrapper card">
+        <div id="honors-prompt" class="quiz-prompt"></div>
+        <input id="honors-input" type="text" class="quiz-input" placeholder="Type the answer" />
+        <div id="honors-feedback" class="quiz-feedback"></div>
+        <div class="nav-controls single">
+          <button id="honors-submit" class="nav-btn">Submit</button>
+        </div>
+        <div id="honors-progress" class="progress-text"></div>
+      </div>
     </section>
   </main>
 

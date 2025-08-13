@@ -160,6 +160,13 @@ const groupInfo = {
   actinide:  { color: '#FEB2B2', description: 'Radioactive metals with complex electron configuration series' }
 };
 
+// List of element symbols for the Honors Chem practice quiz. Only these
+// elements will appear in the honours quiz mode. Duplicates are
+// intentionally avoided.
+const honorsListSymbols = [
+  'H','He','Li','Be','B','C','N','O','F','Ne','Na','Mg','Al','Si','P','S','Cl','Ar','K','Ca','Sc','Ti','V','Cr','Mn','Fe','Co','Ni','Cu','Zn','Ga','Ge','As','Se','Br','Kr','Rb','Sr','Y','Zr','Ru','Rh','Pd','Ag','Cd','In','Sn','Sb','Te','I','Xe','Cs','Ba','La','W','Pt','Au','Hg','Tl','Pb','Bi','Po','At','Rn','Fr','Ra','Ac','U'
+];
+
 // Utility functions
 function qs(selector) {
   return document.querySelector(selector);
@@ -396,6 +403,56 @@ function handleGroupQuizSubmit() {
   nextGroupQuiz();
 }
 
+// HONORS CHEM QUIZ
+// These variables and functions implement a dedicated practice quiz for a
+// predefined subset of elements. The quiz presents each symbol in turn
+// and asks the user to supply the element's name. Once all questions
+// have been answered, the user receives their score.
+let honorsQuestions = [];
+let honorsQuizIndex = 0;
+let honorsQuizCorrect = 0;
+
+function startHonorsQuiz() {
+  // build the list of questions based on the honours list
+  honorsQuestions = elements.filter((e) => honorsListSymbols.includes(e.symbol));
+  honorsQuizIndex = 0;
+  honorsQuizCorrect = 0;
+  nextHonorsQuiz();
+  showScreen('honors-quiz-screen');
+}
+
+function nextHonorsQuiz() {
+  const total = honorsQuestions.length;
+  if (honorsQuizIndex >= total) {
+    // finished: show summary
+    qs('#honors-prompt').textContent = 'Quiz complete!';
+    qs('#honors-input').style.display = 'none';
+    qs('#honors-submit').style.display = 'none';
+    qs('#honors-feedback').textContent = `You answered ${honorsQuizCorrect} out of ${total} correctly.`;
+    qs('#honors-progress').textContent = '';
+    return;
+  }
+  const element = honorsQuestions[honorsQuizIndex];
+  qs('#honors-prompt').textContent = element.symbol;
+  const input = qs('#honors-input');
+  input.value = '';
+  input.style.display = 'block';
+  qs('#honors-submit').style.display = 'inline-block';
+  qs('#honors-feedback').textContent = '';
+  qs('#honors-progress').textContent = `${honorsQuizIndex + 1} / ${total}`;
+}
+
+function handleHonorsQuizSubmit() {
+  const input = qs('#honors-input');
+  const answer = input.value.trim();
+  const element = honorsQuestions[honorsQuizIndex];
+  if (answer.toLowerCase() === element.name.toLowerCase()) {
+    honorsQuizCorrect++;
+  }
+  honorsQuizIndex++;
+  nextHonorsQuiz();
+}
+
 // PERIODIC TABLE
 function buildPeriodicTable() {
   const container = qs('#periodic-table');
@@ -471,6 +528,8 @@ document.addEventListener('DOMContentLoaded', () => {
     buildPeriodicTable();
     showScreen('table-screen');
   });
+  // honours chem quiz
+  qs('#btn-honors').addEventListener('click', startHonorsQuiz);
   // back buttons
   qsa('.back-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -489,4 +548,7 @@ document.addEventListener('DOMContentLoaded', () => {
   qs('#quiz-submit').addEventListener('click', handleQuizSubmit);
   // group quiz
   qs('#group-quiz-submit').addEventListener('click', handleGroupQuizSubmit);
+
+  // honors quiz submit
+  qs('#honors-submit').addEventListener('click', handleHonorsQuizSubmit);
 });

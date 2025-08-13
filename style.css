@@ -119,6 +119,11 @@ main {
   background-color: #E53E3E; /* red */
 }
 
+/* Colour for the honors chem quiz button */
+.mode-btn.honors {
+  background-color: #9F7AEA; /* purple */
+}
+
 .back-btn {
   background: none;
   border: none;
