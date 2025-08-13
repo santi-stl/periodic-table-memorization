@@ -102,18 +102,56 @@
       <div id="periodic-table" class="table-grid"></div>
     </section>
 
-    <!-- Honors chem quiz screen -->
-    <section id="honors-quiz-screen" class="screen hidden">
+    <!-- Honors chem quiz selection screen -->
+    <section id="honors-selection-screen" class="screen hidden">
       <button class="back-btn" data-target="home-screen">← Back</button>
       <h2 class="mode-title">Honors Chem Quiz</h2>
+      <p class="intro-text">Choose a practice mode.</p>
+      <div class="mode-buttons small">
+        <button id="btn-honors-names" class="mode-btn honors">Names Quiz</button>
+        <button id="btn-honors-sign" class="mode-btn honors">Sign Quiz</button>
+        <button id="btn-honors-learn" class="mode-btn honors">Learn Mode</button>
+      </div>
+    </section>
+
+    <!-- Honors names quiz screen -->
+    <section id="honors-names-screen" class="screen hidden">
+      <button class="back-btn" data-target="honors-selection-screen">← Back</button>
+      <h2 class="mode-title">Honors: Names Quiz</h2>
       <div class="quiz-wrapper card">
-        <div id="honors-prompt" class="quiz-prompt"></div>
-        <input id="honors-input" type="text" class="quiz-input" placeholder="Type the answer" />
-        <div id="honors-feedback" class="quiz-feedback"></div>
+        <div id="honors-names-prompt" class="quiz-prompt"></div>
+        <input id="honors-names-input" type="text" class="quiz-input" placeholder="Type the name" />
+        <div id="honors-names-feedback" class="quiz-feedback"></div>
         <div class="nav-controls single">
-          <button id="honors-submit" class="nav-btn">Submit</button>
+          <button id="honors-names-submit" class="nav-btn">Submit</button>
         </div>
-        <div id="honors-progress" class="progress-text"></div>
+        <div id="honors-names-progress" class="progress-text"></div>
+      </div>
+    </section>
+
+    <!-- Honors sign quiz screen -->
+    <section id="honors-sign-screen" class="screen hidden">
+      <button class="back-btn" data-target="honors-selection-screen">← Back</button>
+      <h2 class="mode-title">Honors: Sign Quiz</h2>
+      <div class="quiz-wrapper card">
+        <div id="honors-sign-prompt" class="quiz-prompt"></div>
+        <input id="honors-sign-input" type="text" class="quiz-input" placeholder="Type the symbol" />
+        <div id="honors-sign-feedback" class="quiz-feedback"></div>
+        <div class="nav-controls single">
+          <button id="honors-sign-submit" class="nav-btn">Submit</button>
+        </div>
+        <div id="honors-sign-progress" class="progress-text"></div>
+      </div>
+    </section>
+
+    <!-- Honors learn mode screen -->
+    <section id="honors-learn-screen" class="screen hidden">
+      <button class="back-btn" data-target="honors-selection-screen">← Back</button>
+      <h2 class="mode-title">Honors: Learn Mode</h2>
+      <div class="learn-wrapper card">
+        <div id="honors-learn-square" class="element-square large"></div>
+        <div id="honors-learn-progress" class="progress-text"></div>
+        <div id="honors-learn-options" class="options-grid"></div>
       </div>
     </section>
   </main>

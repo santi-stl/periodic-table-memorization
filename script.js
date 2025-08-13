@@ -403,54 +403,142 @@ function handleGroupQuizSubmit() {
   nextGroupQuiz();
 }
 
-// HONORS CHEM QUIZ
-// These variables and functions implement a dedicated practice quiz for a
-// predefined subset of elements. The quiz presents each symbol in turn
-// and asks the user to supply the element's name. Once all questions
-// have been answered, the user receives their score.
-let honorsQuestions = [];
-let honorsQuizIndex = 0;
-let honorsQuizCorrect = 0;
+// HONORS CHEM QUIZ MODES
+// Build the question list once: filtered elements by honorsListSymbols.
+let honorsQuestions = elements.filter((e) => honorsListSymbols.includes(e.symbol));
+// Variables for the three honours modes
+let honorsNamesIndex = 0;
+let honorsNamesCorrect = 0;
+let honorsSignIndex = 0;
+let honorsSignCorrect = 0;
+let honorsLearnIndex = 0;
 
-function startHonorsQuiz() {
-  // build the list of questions based on the honours list
-  honorsQuestions = elements.filter((e) => honorsListSymbols.includes(e.symbol));
-  honorsQuizIndex = 0;
-  honorsQuizCorrect = 0;
-  nextHonorsQuiz();
-  showScreen('honors-quiz-screen');
+// Start the names quiz: given symbol, input name
+function startHonorsNamesQuiz() {
+  honorsNamesIndex = 0;
+  honorsNamesCorrect = 0;
+  nextHonorsNamesQuestion();
+  showScreen('honors-names-screen');
 }
 
-function nextHonorsQuiz() {
+function nextHonorsNamesQuestion() {
   const total = honorsQuestions.length;
-  if (honorsQuizIndex >= total) {
-    // finished: show summary
-    qs('#honors-prompt').textContent = 'Quiz complete!';
-    qs('#honors-input').style.display = 'none';
-    qs('#honors-submit').style.display = 'none';
-    qs('#honors-feedback').textContent = `You answered ${honorsQuizCorrect} out of ${total} correctly.`;
-    qs('#honors-progress').textContent = '';
+  if (honorsNamesIndex >= total) {
+    qs('#honors-names-prompt').textContent = 'Quiz complete!';
+    qs('#honors-names-input').style.display = 'none';
+    qs('#honors-names-submit').style.display = 'none';
+    qs('#honors-names-feedback').textContent = `You answered ${honorsNamesCorrect} out of ${total} correctly.`;
+    qs('#honors-names-progress').textContent = '';
     return;
   }
-  const element = honorsQuestions[honorsQuizIndex];
-  qs('#honors-prompt').textContent = element.symbol;
-  const input = qs('#honors-input');
+  const element = honorsQuestions[honorsNamesIndex];
+  qs('#honors-names-prompt').textContent = element.symbol;
+  const input = qs('#honors-names-input');
   input.value = '';
   input.style.display = 'block';
-  qs('#honors-submit').style.display = 'inline-block';
-  qs('#honors-feedback').textContent = '';
-  qs('#honors-progress').textContent = `${honorsQuizIndex + 1} / ${total}`;
+  qs('#honors-names-submit').style.display = 'inline-block';
+  qs('#honors-names-feedback').textContent = '';
+  qs('#honors-names-progress').textContent = `${honorsNamesIndex + 1} / ${total}`;
 }
 
-function handleHonorsQuizSubmit() {
-  const input = qs('#honors-input');
+function handleHonorsNamesSubmit() {
+  const input = qs('#honors-names-input');
   const answer = input.value.trim();
-  const element = honorsQuestions[honorsQuizIndex];
+  const element = honorsQuestions[honorsNamesIndex];
   if (answer.toLowerCase() === element.name.toLowerCase()) {
-    honorsQuizCorrect++;
+    honorsNamesCorrect++;
   }
-  honorsQuizIndex++;
-  nextHonorsQuiz();
+  honorsNamesIndex++;
+  nextHonorsNamesQuestion();
+}
+
+// Start the sign quiz: given name, input symbol
+function startHonorsSignQuiz() {
+  honorsSignIndex = 0;
+  honorsSignCorrect = 0;
+  nextHonorsSignQuestion();
+  showScreen('honors-sign-screen');
+}
+
+function nextHonorsSignQuestion() {
+  const total = honorsQuestions.length;
+  if (honorsSignIndex >= total) {
+    qs('#honors-sign-prompt').textContent = 'Quiz complete!';
+    qs('#honors-sign-input').style.display = 'none';
+    qs('#honors-sign-submit').style.display = 'none';
+    qs('#honors-sign-feedback').textContent = `You answered ${honorsSignCorrect} out of ${total} correctly.`;
+    qs('#honors-sign-progress').textContent = '';
+    return;
+  }
+  const element = honorsQuestions[honorsSignIndex];
+  // prompt with the element name; ask for symbol
+  qs('#honors-sign-prompt').textContent = element.name;
+  const input = qs('#honors-sign-input');
+  input.value = '';
+  input.style.display = 'block';
+  qs('#honors-sign-submit').style.display = 'inline-block';
+  qs('#honors-sign-feedback').textContent = '';
+  qs('#honors-sign-progress').textContent = `${honorsSignIndex + 1} / ${total}`;
+}
+
+function handleHonorsSignSubmit() {
+  const input = qs('#honors-sign-input');
+  const answer = input.value.trim();
+  const element = honorsQuestions[honorsSignIndex];
+  if (answer.toLowerCase() === element.symbol.toLowerCase()) {
+    honorsSignCorrect++;
+  }
+  honorsSignIndex++;
+  nextHonorsSignQuestion();
+}
+
+// Start honors learn mode: similar to general learn but restricted list
+function startHonorsLearn() {
+  honorsLearnIndex = 0;
+  nextHonorsLearnQuestion();
+  showScreen('honors-learn-screen');
+}
+
+function nextHonorsLearnQuestion() {
+  // cycle back when all questions answered
+  if (honorsLearnIndex >= honorsQuestions.length) {
+    honorsLearnIndex = 0;
+  }
+  const element = honorsQuestions[honorsLearnIndex];
+  const catInfo = groupInfo[element.category];
+  const square = qs('#honors-learn-square');
+  square.textContent = element.symbol;
+  square.style.backgroundColor = catInfo.color;
+  qs('#honors-learn-progress').textContent = `${honorsLearnIndex + 1} / ${honorsQuestions.length}`;
+  // create options: correct + 3 wrong from honors list
+  const options = [element];
+  const pool = honorsQuestions.filter((e) => e.symbol !== element.symbol);
+  while (options.length < 4) {
+    const rnd = pool[Math.floor(Math.random() * pool.length)];
+    if (!options.includes(rnd)) options.push(rnd);
+  }
+  // shuffle options
+  options.sort(() => Math.random() - 0.5);
+  const container = qs('#honors-learn-options');
+  container.innerHTML = '';
+  options.forEach((opt) => {
+    const optDiv = document.createElement('div');
+    optDiv.className = 'option-tile';
+    const optName = document.createElement('div');
+    optName.className = 'option-name';
+    optName.textContent = opt.name;
+    optDiv.appendChild(optName);
+    optDiv.addEventListener('click', () => {
+      if (opt.symbol === element.symbol) {
+        honorsLearnIndex++;
+        nextHonorsLearnQuestion();
+      } else {
+        optDiv.classList.add('shake');
+        setTimeout(() => optDiv.classList.remove('shake'), 500);
+      }
+    });
+    container.appendChild(optDiv);
+  });
 }
 
 // PERIODIC TABLE
@@ -528,8 +616,10 @@ document.addEventListener('DOMContentLoaded', () => {
     buildPeriodicTable();
     showScreen('table-screen');
   });
-  // honours chem quiz
-  qs('#btn-honors').addEventListener('click', startHonorsQuiz);
+  // honours chem quiz: open selection screen
+  qs('#btn-honors').addEventListener('click', () => {
+    showScreen('honors-selection-screen');
+  });
   // back buttons
   qsa('.back-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -549,6 +639,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // group quiz
   qs('#group-quiz-submit').addEventListener('click', handleGroupQuizSubmit);
 
-  // honors quiz submit
-  qs('#honors-submit').addEventListener('click', handleHonorsQuizSubmit);
+  // honours quiz mode buttons
+  qs('#btn-honors-names').addEventListener('click', startHonorsNamesQuiz);
+  qs('#btn-honors-sign').addEventListener('click', startHonorsSignQuiz);
+  qs('#btn-honors-learn').addEventListener('click', startHonorsLearn);
+  // honors names and sign submit handlers
+  qs('#honors-names-submit').addEventListener('click', handleHonorsNamesSubmit);
+  qs('#honors-sign-submit').addEventListener('click', handleHonorsSignSubmit);
 });
